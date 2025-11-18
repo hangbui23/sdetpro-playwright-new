@@ -61,7 +61,7 @@ test.describe('Test computer', () => {
     await checkoutPage.BillingAddressComponent.clickContinue();
     await checkoutPage.ShippingAddressComponent.clickOnContinueButton();
     await checkoutPage.ShippingMethodComponent.selectRandomShippingMethodAndContinue();
-    await page.waitForTimeout(5000)
+    await page.waitForTimeout(500)
   })
 
   test('Expensive computer 2', async ({ page }) => {
