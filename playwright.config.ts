@@ -6,7 +6,7 @@ export default defineConfig({
   workers:2,
   use: {
     headless: false,
-    baseURL: "https://the-internet.herokuapp.com/",
+    baseURL: "https://demowebshop.tricentis.com/", //https://the-internet.herokuapp.com/
     actionTimeout:3*1000
   },
   projects: [

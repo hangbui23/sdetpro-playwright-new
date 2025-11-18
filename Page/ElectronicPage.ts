@@ -1,0 +1,5 @@
+import { Page } from "@playwright/test";
+import BasePage from "./BasePage";
+
+export default class ElectronicPage extends BasePage{
+}
