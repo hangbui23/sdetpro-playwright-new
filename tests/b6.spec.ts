@@ -61,14 +61,17 @@ test.describe('Test computer', () => {
     await checkoutPage.BillingAddressComponent.clickContinue();
     await checkoutPage.ShippingAddressComponent.clickOnContinueButton();
     await checkoutPage.ShippingMethodComponent.selectRandomShippingMethodAndContinue();
+    const selectedPaymentMethod = await checkoutPage.PaymentMethodComponent.selectRandomPaymentMethodAndContinue();
+    const paymentInfoType = await checkoutPage.getPaymentInfo(selectedPaymentMethod);
+    await paymentInfoType.processPayment();
+    //await paymentInfoType.fillPaymentInfo();
     await page.waitForTimeout(500)
   })
 
   test('Expensive computer 2', async ({ page }) => {
     await page.goto('build-your-own-expensive-computer-2');
     let computerFlow = PageGeneratorManager.getComputerFlow(page, expensiveComputerData);
-    await computerFlow.buildComputer();
-    let detailPage = PageGeneratorManager.getComputerDetailPage(page);
+    let detailPage =  await computerFlow.buildComputer();
     await detailPage.clickOnLink('Shopping cart');
     await expect(page).toHaveURL('/cart');
     let shoppingCartPage = PageGeneratorManager.getShoppingCartPage(page);
@@ -76,6 +79,15 @@ test.describe('Test computer', () => {
      const signInPage = await shoppingCartPage.ClickTermOfServiceAndCheckout();
     await signInPage.CheckOutAsGuestOrRegister.clickCheckOutAsGuest();
     await expect(page).toHaveURL('/onepagecheckout');
+    const checkoutPage = PageGeneratorManager.getCheckOutPage(page);
+    await checkoutPage.BillingAddressComponent.fillBillingAddressForm(billingInfo);
+    await checkoutPage.BillingAddressComponent.clickContinue();
+    await checkoutPage.ShippingAddressComponent.clickOnContinueButton();
+    await checkoutPage.ShippingMethodComponent.selectRandomShippingMethodAndContinue();
+    const selectedPaymentMethod = await checkoutPage.PaymentMethodComponent.selectRandomPaymentMethodAndContinue();
+    const paymentInfoType = await checkoutPage.getPaymentInfo(selectedPaymentMethod);
+    await paymentInfoType.processPayment();
+    await checkoutPage.ConfirmOrderComponent.clickConfirmButton();
     await page.waitForTimeout(5000)
   })
 });

@@ -8,6 +8,9 @@ import FooterTestFlow from "../component/flow/FooterTestFlow";
 import ShoppingCartPage from "../Page/ShoppingCartPage";
 import SignInPage from "../Page/SignInPage";
 import CheckoutPage from "../Page/CheckoutPage";
+import PaymentMethodPage from "../Page/PaymentMethodPage";
+import PaymentInfoPage from "../Page/PaymentInfoPage";
+import ConfirmOrderPage from "../Page/ConfirmOrderPage";
 
 export default class PageGeneratorManager{
     public static getHomePage(page:Page):HomePage{
@@ -40,5 +43,17 @@ export default class PageGeneratorManager{
 
     public static getCheckOutPage(page:Page):CheckoutPage{
         return new CheckoutPage(page);
+    }
+
+    public static getPaymentMethodPage(page:Page):PaymentMethodPage{
+        return new PaymentMethodPage(page);
+    }
+
+     public static getPaymentInfoPage(page:Page):PaymentInfoPage{
+        return new PaymentInfoPage(page);
+    }
+
+    public static getConfirmOrderPage(page:Page):ConfirmOrderPage{
+        return new ConfirmOrderPage(page);
     }
 }

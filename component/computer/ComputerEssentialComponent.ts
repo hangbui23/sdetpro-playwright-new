@@ -9,12 +9,17 @@ export default abstract class ComputerEssentialComponent extends ProductEssentia
     public abstract selectRAM(value : string):Promise<string|null> ;
     public abstract selectProcessor(value : string):Promise<string|null> ;
 
-    protected async selectOption(value: string):Promise<string | null>{
-      let xpath = this.SELECTOR.replace('%s',value);
-      const optionLoc = this.component.locator(xpath);
-       await optionLoc.click();
-       return optionLoc.textContent();
-    }
+        protected async selectOption(value: string):Promise<string | null>{
+            const xpath = this.SELECTOR.replace('%s', value);
+            const optionLoc = this.component.locator(xpath);
+            try {
+                await optionLoc.waitFor({ state: 'visible', timeout: 5000 });
+                await optionLoc.click();
+                return await optionLoc.textContent();
+            } catch (err) {
+                throw new Error(`Failed to select option '${value}' using xpath '${xpath}': ${err}`);
+            }
+        }
 
      public async selectHDD(value:string):Promise<string|null>{
         return await this.selectOption(value);

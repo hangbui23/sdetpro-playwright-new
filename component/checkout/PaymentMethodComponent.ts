@@ -1,0 +1,31 @@
+import { Locator } from "@playwright/test";
+
+export default class PaymentMethodComponent {
+    public static readonly SELECTOR = '#opc-payment_method';
+    private paymentMethodType = '.payment-details label'
+    private CONTINUE_BUTTON = "input[value='Continue']";
+
+    constructor(private component: Locator) {
+        this.component = component;
+    }
+
+    public async selectRandomPaymentMethod() :Promise<string>{
+        await this.component.locator(this.paymentMethodType).first().waitFor({state:'visible'});
+        const lst_loc = await this.component.locator(this.paymentMethodType).all();
+        const index = Math.floor(Math.random() * lst_loc.length);
+        const paymentMethodName = await lst_loc[index].innerText();
+        await lst_loc[index].click();
+        return paymentMethodName;
+    }
+
+    public async clickOnContinueButton(): Promise<void> {
+        await this.component.locator(this.CONTINUE_BUTTON).click();
+    }
+
+    public async selectRandomPaymentMethodAndContinue(): Promise<string> {
+        const paymentMethodName = await this.selectRandomPaymentMethod();
+        await this.clickOnContinueButton();
+        return paymentMethodName;
+    }
+
+}

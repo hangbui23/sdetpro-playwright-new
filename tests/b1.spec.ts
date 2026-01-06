@@ -15,5 +15,4 @@ test("b1", async ({ page }) => {
   await page.locator("#password").fill(password);
   await page.locator('button:has-text("Login")').click();
   expect(await page.locator("#flash").textContent()).toContain("You logged into a secure area!");
-  page.close();
 });
